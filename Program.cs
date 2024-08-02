@@ -1,4 +1,6 @@
 
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using TabHubAPI.DataAccess;
 
 namespace TabHubAPI
@@ -13,13 +15,16 @@ namespace TabHubAPI
 
             builder.Services.AddControllers();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<ThDbContext>();
+            builder.Services.AddDbContext<ThDbContext>(
+                o => o.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
 
             var app = builder.Build();
 
+            /*
             using var scope = app.Services.CreateScope();
             using var dbContext = scope.ServiceProvider.GetRequiredService<ThDbContext>();
             dbContext.Database.EnsureCreated();
+            */
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

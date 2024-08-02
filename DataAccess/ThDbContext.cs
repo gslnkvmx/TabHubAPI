@@ -5,17 +5,11 @@ namespace TabHubAPI.DataAccess
 {
     public class ThDbContext: DbContext
     {
-        private readonly IConfiguration _configuration;
-        public ThDbContext(IConfiguration configuration)
+        public ThDbContext(DbContextOptions<ThDbContext> options) : base(options)
         {
-            _configuration = configuration;
         }
 
         public DbSet<Tab> Tabs => Set<Tab>();
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseNpgsql(_configuration.GetConnectionString("Database"));
-        }
+        public DbSet<TabCollection> TabCollections => Set<TabCollection>();
     }
 }

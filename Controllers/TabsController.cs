@@ -18,7 +18,7 @@ namespace TabHubAPI.Controllers
         {
             _dbContext = dbContext;
         }
-        // GET: api/<TabsController>
+
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
@@ -27,18 +27,18 @@ namespace TabHubAPI.Controllers
             return Ok(tabs);
         }
 
-        // GET api/<TabsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<IActionResult> Get(Guid id)
         {
-            return "value";
+            var tab = await _dbContext.Tabs.SingleOrDefaultAsync(x => x.Id == id);
+
+            return Ok(tab);
         }
 
-        // POST api/<TabsController>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateTabRequest request, CancellationToken ct)
         {
-            var tab = new Tab(request.Url, request.Description);
+            var tab = new Tab(request.Url, request.collection, request.Description);
 
             await _dbContext.Tabs.AddAsync(tab, ct);
             await _dbContext.SaveChangesAsync(ct);
@@ -46,14 +46,12 @@ namespace TabHubAPI.Controllers
             return Ok(tab);
         }
 
-        // PUT api/<TabsController>/5
         [HttpPut("{id}")]
         public void Put(Guid id, [FromBody] string value)
         {
 
         }
 
-        // DELETE api/<TabsController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

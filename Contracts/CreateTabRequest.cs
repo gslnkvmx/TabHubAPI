@@ -1,4 +1,4 @@
 ﻿namespace TabHubAPI.Contracts
 {
-    public record CreateTabRequest(string Url, string? Description);
+    public record CreateTabRequest(string Url, Guid collection, string? Description);
 }
