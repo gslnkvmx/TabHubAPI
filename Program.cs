@@ -1,6 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 using TabHubAPI.DataAccess;
 
 namespace TabHubAPI
@@ -17,6 +19,12 @@ namespace TabHubAPI
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ThDbContext>(
                 o => o.UseNpgsql(builder.Configuration.GetConnectionString("Database")));
+
+            builder.Services.AddControllers()
+        .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        });
 
             var app = builder.Build();
 

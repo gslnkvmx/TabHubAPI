@@ -10,46 +10,46 @@ namespace TabHubAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TabsController : ControllerBase
+    public class TabCollectionsController : ControllerBase
     {
         private readonly ThDbContext _dbContext;
 
-        public TabsController(ThDbContext dbContext)
+        public TabCollectionsController(ThDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
+
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
-            var tabs = await _dbContext.Tabs.ToListAsync(ct);
+            var collections = await _dbContext.TabCollections.ToListAsync(ct);
 
-            return Ok(tabs);
+            return Ok(collections);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id, CancellationToken ct)
         {
-            var tab = await _dbContext.Tabs.SingleOrDefaultAsync(x => x.Id == id, ct);
+            var collection = await _dbContext.TabCollections.Include(c => c.Tabs).SingleOrDefaultAsync(c => c.Id == id, ct);
 
-            return Ok(tab);
+            return Ok(collection);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateTabRequest request, CancellationToken ct)
+        public async Task<IActionResult> Create([FromBody] CreateTabColRequest request, CancellationToken ct)
         {
-            var tab = new Tab(request.Url, request.collection, request.Description);
+            var collection = new TabCollection(request.Name, request.Description);
 
-            await _dbContext.Tabs.AddAsync(tab, ct);
+            await _dbContext.TabCollections.AddAsync(collection, ct);
             await _dbContext.SaveChangesAsync(ct);
 
-            return Ok(tab);
+            return Ok(collection);
         }
 
         [HttpPut("{id}")]
-        public void Put(Guid id, [FromBody] string value)
+        public void Put(int id, [FromBody] string value)
         {
-
         }
 
         [HttpDelete("{id}")]
