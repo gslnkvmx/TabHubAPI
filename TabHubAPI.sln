@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34622.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabHubAPI", "TabHubAPI.csproj", "{84F75C4B-0D81-4ED8-9182-17F21A96BD79}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{84F75C4B-0D81-4ED8-9182-17F21A96BD79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84F75C4B-0D81-4ED8-9182-17F21A96BD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84F75C4B-0D81-4ED8-9182-17F21A96BD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84F75C4B-0D81-4ED8-9182-17F21A96BD79}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {11EDAFC1-74AE-4A88-BFDC-78D183576381}
+	EndGlobalSection
+EndGlobal
