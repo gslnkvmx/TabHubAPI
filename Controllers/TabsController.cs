@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using TabHubAPI.Contracts;
 using TabHubAPI.DataAccess;
 using TabHubAPI.Models;
+using TabHubAPI.Repositories;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,17 +13,15 @@ namespace TabHubAPI.Controllers
     [ApiController]
     public class TabsController : ControllerBase
     {
-        private readonly ThDbContext _dbContext;
-
-        public TabsController(ThDbContext dbContext)
+        private readonly ITabRepository _tabRepository;
+        public TabsController(ITabRepository tabRepository)
         {
-            _dbContext = dbContext;
+            _tabRepository = tabRepository;
         }
-
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
-            var tabs = await _dbContext.Tabs.ToListAsync(ct);
+            var tabs = await _tabRepository.GetAllAsync(ct);
 
             return Ok(tabs);
         }
@@ -30,7 +29,7 @@ namespace TabHubAPI.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(Guid id, CancellationToken ct)
         {
-            var tab = await _dbContext.Tabs.SingleOrDefaultAsync(x => x.Id == id, ct);
+            var tab = await _tabRepository.GetByIdAsync(id, ct);
 
             return Ok(tab);
         }
@@ -40,8 +39,8 @@ namespace TabHubAPI.Controllers
         {
             var tab = new Tab(request.Url, request.collection, request.Description);
 
-            await _dbContext.Tabs.AddAsync(tab, ct);
-            await _dbContext.SaveChangesAsync(ct);
+            await _tabRepository.CreateAsync(tab, ct);
+            await _tabRepository.SaveAsync(ct);
 
             return Ok(tab);
         }
