@@ -27,7 +27,7 @@ namespace TabHubAPI.Repositories
         public async Task<Tab?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
             Tab? tab = null;
-            try
+            try   
             {
                 tab = await _dbContext.Tabs.SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
             }

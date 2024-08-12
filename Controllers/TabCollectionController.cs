@@ -23,7 +23,7 @@ namespace TabHubAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> Get(CancellationToken ct)
         {
-            var collections = await _dbContext.TabCollections.ToListAsync(ct);
+            var collections = await _dbContext.TabCollections.Include(c => c.Tabs).ToListAsync(ct);
 
             return Ok(collections);
         }
